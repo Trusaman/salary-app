@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 public class ProcessPdfFile {
-    public static void main(String[] args) throws Exception {
+    public static List<Employee> getEmp() throws Exception {
 
         List<Employee> employees = new ReadExcelFile().getEmployees();
 
@@ -27,12 +27,15 @@ public class ProcessPdfFile {
             extracted(employees.get(i));
         }
 
+        return employees;
     }
 
     private static void extracted(Employee employee) throws FileNotFoundException, DocumentException {
 
         Document document = new Document();
-        OutputStream outputStream = new FileOutputStream(new File(Constant.PDF_FILE_PATH + employee.getName() + ".pdf"));
+
+        String filePath = Constant.PDF_FILE_PATH + employee.getName() + ".pdf";
+        OutputStream outputStream = new FileOutputStream(new File(filePath));
 
         PdfWriter.getInstance(document, outputStream);
 
@@ -47,7 +50,8 @@ public class ProcessPdfFile {
 
         document.close();
 
-        System.out.println("Write PDF  file successfully");
+        employee.setPdfFilePath(filePath);
+        System.out.println("Write PDF file successfully");
     }
 
     private static void addTableHeader(PdfPTable table) {

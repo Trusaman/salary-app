@@ -70,7 +70,7 @@ public class ReadExcelFile {
                 count++;
                 continue;
             }
-            System.out.println(entry.getKey() + " : " + entry.getValue());
+//            System.out.println(entry.getKey() + " : " + entry.getValue());
             Employee employee = new Employee();
             employee.setName(entry.getValue().get(0));
 
@@ -79,9 +79,11 @@ public class ReadExcelFile {
 
             employee.setAge(Float.parseFloat(entry.getValue().get(1).trim()));
             employee.setGender(entry.getValue().get(2));
+            employee.setEmail(entry.getValue().get(3));
 
             employees.add(employee);
         }
+
 
 
     }
