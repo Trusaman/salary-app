@@ -1,6 +1,5 @@
 package org.example.pdf;
 
-import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Phrase;
@@ -16,7 +15,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class ProcessPdfFile {
     public static List<Employee> getEmp() throws Exception {
@@ -41,8 +39,8 @@ public class ProcessPdfFile {
 
         document.open();
 
-        PdfPTable table = new PdfPTable(3);
-        addTableHeader(table);
+        PdfPTable table = new PdfPTable(2);
+//        addTableHeader(table);
         addRows(table, employee);
 //        addCustomRows(table);
 
@@ -54,19 +52,32 @@ public class ProcessPdfFile {
         System.out.println("Write PDF file successfully");
     }
 
-    private static void addTableHeader(PdfPTable table) {
-        Stream.of("Name", "Age", "Gender").forEach(columnTitle -> {
-            PdfPCell header = new PdfPCell();
-            header.setBackgroundColor(BaseColor.LIGHT_GRAY);
-            header.setBorderWidth(2);
-            header.setPhrase(new Phrase(columnTitle));
-            table.addCell(header);
-        });
-    }
+//    private static void addTableHeader(PdfPTable table) {
+//        Stream.of("Name", "Age", "Gender").forEach(columnTitle -> {
+//            PdfPCell header = new PdfPCell();
+//            header.setBackgroundColor(BaseColor.LIGHT_GRAY);
+//            header.setBorderWidth(2);
+//            header.setPhrase(new Phrase(columnTitle));
+//            table.addCell(header);
+//        });
+//    }
 
     private static void addRows(PdfPTable table, Employee employee) {
-        table.addCell(employee.getName());
-        table.addCell(String.valueOf(employee.getAge()));
-        table.addCell(employee.getGender());
+
+        table.addCell("Name");
+        PdfPCell nameCell = new PdfPCell(new Phrase(employee.getName()));
+        // format nameCell to align right
+        nameCell.setHorizontalAlignment(PdfPCell.ALIGN_RIGHT);
+        table.addCell(nameCell);
+
+        table.addCell("Age");
+        PdfPCell ageCell = new PdfPCell(new Phrase(String.valueOf(employee.getAge().intValue())));
+        ageCell.setHorizontalAlignment(PdfPCell.ALIGN_RIGHT);
+        table.addCell(ageCell);
+
+        table.addCell("Gender");
+        PdfPCell genderCell = new PdfPCell(new Phrase(employee.getGender()));
+        genderCell.setHorizontalAlignment(PdfPCell.ALIGN_RIGHT);
+        table.addCell(genderCell);
     }
 }

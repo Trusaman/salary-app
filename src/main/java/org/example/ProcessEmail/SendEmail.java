@@ -49,7 +49,7 @@ public class SendEmail {
         message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(employee.getEmail()));
         message.setSubject("Salary Payroll Slip - May 2023");
 
-        String msg = "Dear <b>Mr./Mrs." + employee.getName() + "</b>";
+        String msg = "Dear <b>Mr./Mrs." + employee.getName() + "</b><br>Please take find the attachment for your detail salary in May 2023.<br>If you have any further questions, do not hesitate to contact us: 03587528 - Mrs. Thu";
 
         MimeBodyPart mimeBodyPart = new MimeBodyPart();
         mimeBodyPart.setContent(msg, "text/html; charset=utf-8");
@@ -63,7 +63,7 @@ public class SendEmail {
 
         message.setContent(multipart);
 
-        Transport.send(message);
+//        Transport.send(message);
 
         System.out.println("Send email successfully");
     }
